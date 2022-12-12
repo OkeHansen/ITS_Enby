@@ -14,7 +14,7 @@ WiFiUDP UDP;
 #define male_sensor 17
 #define female_sensor 18
 #define sink_sensor 26
-#define trigger 34
+#define trigger 32                                                                             
 #define echo 35
 const int foto_max = 1023;
 int h_dryer = foto_max;
@@ -23,7 +23,6 @@ int female = foto_max;
 int sink = 0;
 float duration = 0.0;
 float distance = 0.0;
-bool receive = 0;
 const float speedOfSound = 0.03432;
 
 
@@ -58,6 +57,13 @@ void setup() {
 }
 
 void loop() {
+  digitalWrite(trigger, HIGH);
+  delayMicroseconds(2);
+  digitalWrite(trigger, LOW);
+  delayMicroseconds(10);
+  duration = pulseIn(echo, HIGH);
+  distance = (duration / 2) * speedOfSound;
+  
   h_dryer = analogRead(dryer_sensor);
   Serial.print("Föhn: ");
   Serial.println(h_dryer); 
